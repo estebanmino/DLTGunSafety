@@ -83,13 +83,16 @@ class Safety extends Component {
               
               <input type="submit"  value="Check gun" />
             </form>
-            <p>Gun address: {this.props.checkedGunAddress}</p>
-            {this.props.checkedGunAddress === null ? 
-              this.state.gunContract + 'ppp'
-              :
-              <button onClick={this.props.retrievegunOwnersHistory}>Get gun history</button>
-            }
-            <p>{this.props.gunOwnersHistory}</p>
+
+            <Gun 
+              checkedGunAddress={this.props.checkedGunAddress}
+              retrievegunOwnersHistory={this.props.retrievegunOwnersHistory}
+              gunOwnersHistory={this.props.gunOwnersHistory}
+              modifyGunOwnerFromAddress={this.props.modifyGunOwnerFromAddress}
+              modifyGunOwner={this.props.modifyGunOwner}
+            />
+
+
           </div>
         </div>
       </div>

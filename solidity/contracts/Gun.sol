@@ -17,7 +17,8 @@ contract Gun {
         ownersHistory.push(_manufacturer);
     }
     
-    function addOwnerHistory(address _address) public returns (bool) {
+    function addOwnerHistory(address _msgSender, address _address) public returns (bool) {
+        require(_msgSender == ownersHistory[ownersHistory.length - 1]);
         ownersHistory.push(_address);
         return true;
     }

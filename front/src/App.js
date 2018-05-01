@@ -18,6 +18,8 @@ class App extends Component {
     this.createGun = this.createGun.bind(this);
     this.checkGun = this.checkGun.bind(this);
     this.retrievegunOwnersHistory = this.retrievegunOwnersHistory.bind(this)
+    this.modifyGunOwner=this.modifyGunOwner.bind(this)
+    this.modifyGunOwnerFromAddress=this.modifyGunOwnerFromAddress.bind(this)
   }
 
 
@@ -70,6 +72,26 @@ class App extends Component {
     ) 
   }
 
+  modifyGunOwnerFromAddress(_gunAddress, _newOwnerAddress) {
+    this.state.gunContract.modifyGunOwnerFromAddress(
+      _gunAddress, _newOwnerAddress,
+      {from: this.state.coinbase},
+      function(error, result) {
+        console.log("modifyGunOwnerFromAddress", result)        
+      }.bind(this)
+    ) 
+  }
+
+  modifyGunOwner(_make, _model, _serialNumber, _newOwnerAddress) {
+    safetyContract.modifyGunOwner(
+      _make, _model, _serialNumber, _newOwnerAddress,
+      {from: this.state.coinbase},
+      function(error, result) {
+        console.log("modifyGunOwner", result)        
+      }.bind(this)
+    )    
+  }
+
   render() {
     return (
       <div className="App">
@@ -77,7 +99,7 @@ class App extends Component {
           <h1 className="App-title">DLT Gun Safety</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          
         </p>
         <Safety 
           checkGun={this.checkGun}
@@ -85,6 +107,8 @@ class App extends Component {
           checkedGunAddress={this.state.checkedGunAddress}
           retrievegunOwnersHistory={this.retrievegunOwnersHistory}
           gunOwnersHistory={this.state.gunOwnersHistory}
+          modifyGunOwnerFromAddress={this.modifyGunOwnerFromAddress}
+          modifyGunOwner={this.modifyGunOwner}
           />
       </div>
     );
