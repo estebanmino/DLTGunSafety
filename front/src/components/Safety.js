@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { gunABI, safetyContract, web3 } from '../EthereumSetup';
+import './Gun'
+import Gun from './Gun';
+
 
 class Safety extends Component {
   constructor(props) {
@@ -10,6 +14,7 @@ class Safety extends Component {
       checkMake: null,
       checkModel: null,
       checkSerialNumber: null,
+      gunContract: null,
     }
 
     this.handleCreateGun = this.handleCreateGun.bind(this)
@@ -79,7 +84,12 @@ class Safety extends Component {
               <input type="submit"  value="Check gun" />
             </form>
             <p>Gun address: {this.props.checkedGunAddress}</p>
-
+            {this.props.checkedGunAddress === null ? 
+              this.state.gunContract + 'ppp'
+              :
+              <button onClick={this.props.retrievegunOwnersHistory}>Get gun history</button>
+            }
+            <p>{this.props.gunOwnersHistory}</p>
           </div>
         </div>
       </div>

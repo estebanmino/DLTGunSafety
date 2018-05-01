@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { safetyContract, web3 } from './EthereumSetup';
+import { gunABI, safetyContract, web3 } from './EthereumSetup';
 import Safety from './components/Safety';
 
 
@@ -10,11 +10,14 @@ class App extends Component {
     this.state = {
       coinbase: null,
       checkedGunAddress: null,
+      gunContract: null,
+      gunOwnersHistory: null,
     }
 
     this.getCoinbase = this.getCoinbase.bind(this);
     this.createGun = this.createGun.bind(this);
-    this.checkGun = this.checkGun.bind(this)
+    this.checkGun = this.checkGun.bind(this);
+    this.retrievegunOwnersHistory = this.retrievegunOwnersHistory.bind(this)
   }
 
 
@@ -35,7 +38,9 @@ class App extends Component {
       {from: this.state.coinbase},
       function(error, result) {
         this.setState({
-          checkedGunAddress: result
+          checkedGunAddress: result,
+          gunContract: web3.eth.contract(gunABI).at(String(result))        
+          
         })
         console.log("checkGun", result)        
       }.bind(this)
@@ -48,6 +53,19 @@ class App extends Component {
       {from: this.state.coinbase},
       function(error, result) {
         console.log("createGun", result)        
+      }.bind(this)
+    ) 
+  }
+
+  retrievegunOwnersHistory() {
+    console.log("retrievegunOwnersHistory", this.state.checkedGunAddress)
+    this.state.gunContract.getOwnersHistory(
+      {from: this.state.coinbase},
+      function(error, result) {
+        this.setState({
+          gunOwnersHistory: result
+        })
+        console.log("retrievegunOwnersHistory", result)        
       }.bind(this)
     ) 
   }
@@ -65,6 +83,8 @@ class App extends Component {
           checkGun={this.checkGun}
           createGun={this.createGun}
           checkedGunAddress={this.state.checkedGunAddress}
+          retrievegunOwnersHistory={this.retrievegunOwnersHistory}
+          gunOwnersHistory={this.state.gunOwnersHistory}
           />
       </div>
     );

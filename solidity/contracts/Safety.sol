@@ -41,7 +41,7 @@ contract Safety {
         return map.createGun(make, model, serialNumber, msg.sender);
     }
     
-    function checkGun(string make, string model, string serialNumber) public 
+    function checkGun(string make, string model, string serialNumber) constant public 
             onlyPrivilegedToCheckGun() returns (address) {
         // check permission
         // get make|model|serialNumber

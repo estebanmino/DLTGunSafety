@@ -22,7 +22,7 @@ contract Gun {
         return true;
     }
     
-    function getOwnersHistory() public returns (address[]) {
+    function getOwnersHistory() constant public returns (address[]) {
         return ownersHistory;
     }
     

@@ -13,7 +13,7 @@ contract Map {
         return newGun;
     }
     
-    function checkGun(string make, string model, string serialNumber) public returns (address) {
+    function checkGun(string make, string model, string serialNumber) constant public returns (address) {
        bytes32 hashBytes = keccak256(make, model, serialNumber);
         return gunsMap[hashBytes];
     }
